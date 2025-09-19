@@ -25,7 +25,7 @@ const AppContent: React.FC = () => {
   const renderView = () => {
     switch (activeView) {
       case 'dashboard':
-        return <Dashboard />
+        return <Dashboard onNavigate={setActiveView} />
       case 'applications':
         return <Applications />
       case 'users':
@@ -39,7 +39,7 @@ const AppContent: React.FC = () => {
       case 'help':
         return <Help />
       default:
-        return <Dashboard />
+        return <Dashboard onNavigate={setActiveView} />
     }
   }
 

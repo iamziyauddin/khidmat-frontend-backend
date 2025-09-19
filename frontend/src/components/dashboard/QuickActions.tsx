@@ -5,6 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
+interface QuickActionsProps {
+  onNavigate?: (view: string) => void
+}
+
 const quickActions = [
   {
     id: '1',
@@ -13,7 +17,8 @@ const quickActions = [
     description: 'Applications awaiting review',
     icon: Clock,
     color: 'bg-blue-50 text-blue-600',
-    action: 'Review Now'
+    action: 'Review Now',
+    targetView: 'applications'
   },
   {
     id: '2',
@@ -22,7 +27,8 @@ const quickActions = [
     description: 'Urgent applications',
     icon: TrendingUp,
     color: 'bg-red-50 text-red-600',
-    action: 'View All'
+    action: 'View All',
+    targetView: 'applications'
   },
   {
     id: '3',
@@ -31,7 +37,8 @@ const quickActions = [
     description: 'Submitted today',
     icon: FileText,
     color: 'bg-green-50 text-green-600',
-    action: 'Process'
+    action: 'Process',
+    targetView: 'applications'
   },
   {
     id: '4',
@@ -40,11 +47,17 @@ const quickActions = [
     description: 'Currently online',
     icon: Users,
     color: 'bg-purple-50 text-purple-600',
-    action: 'Manage'
+    action: 'Manage',
+    targetView: 'users'
   }
 ]
 
-export const QuickActions: React.FC = () => {
+export const QuickActions: React.FC<QuickActionsProps> = ({ onNavigate }) => {
+  const handleActionClick = (targetView: string) => {
+    if (onNavigate) {
+      onNavigate(targetView)
+    }
+  }
   return (
     <Card className="col-span-2">
       <CardHeader>
@@ -70,7 +83,12 @@ export const QuickActions: React.FC = () => {
                 </div>
                 <h4 className="font-semibold text-gray-900 mb-1">{action.title}</h4>
                 <p className="text-sm text-gray-600 mb-3">{action.description}</p>
-                <Button size="sm" variant="outline" className="w-full">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => handleActionClick(action.targetView)}
+                >
                   {action.action}
                 </Button>
               </motion.div>

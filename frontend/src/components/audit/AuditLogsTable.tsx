@@ -17,11 +17,13 @@ import { formatDateTime } from '@/lib/utils'
 interface AuditLogsTableProps {
   auditLogs: AuditLog[]
   onViewDetails: (log: AuditLog) => void
+  onDownloadLog?: (log: AuditLog) => void
 }
 
 export const AuditLogsTable: React.FC<AuditLogsTableProps> = ({
   auditLogs,
-  onViewDetails
+  onViewDetails,
+  onDownloadLog
 }) => {
   const getActionColor = (action: string) => {
     switch (action.toLowerCase()) {
@@ -123,10 +125,17 @@ export const AuditLogsTable: React.FC<AuditLogsTableProps> = ({
                     size="icon" 
                     className="h-8 w-8"
                     onClick={() => onViewDetails(log)}
+                    title="View audit log details"
                   >
                     <Eye className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-8 w-8"
+                    onClick={() => onDownloadLog && onDownloadLog(log)}
+                    title="Download audit log"
+                  >
                     <Download className="h-4 w-4" />
                   </Button>
                 </div>

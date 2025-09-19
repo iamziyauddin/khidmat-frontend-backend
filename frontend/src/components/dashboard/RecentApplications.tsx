@@ -16,8 +16,25 @@ import {
 import { mockApplications } from '@/data/mockData'
 import { formatDate, getInitials } from '@/lib/utils'
 
-export const RecentApplications: React.FC = () => {
+interface RecentApplicationsProps {
+  onNavigate?: (view: string) => void
+}
+
+export const RecentApplications: React.FC<RecentApplicationsProps> = ({ onNavigate }) => {
   const recentApplications = mockApplications.slice(0, 5)
+
+  const handleViewAllClick = () => {
+    if (onNavigate) {
+      onNavigate('applications')
+    }
+  }
+
+  const handleViewApplication = (applicationId: string) => {
+    if (onNavigate) {
+      // Navigate to applications view - in a more complex app, you might pass the application ID
+      onNavigate('applications')
+    }
+  }
 
   const getStatusVariant = (status: string) => {
     switch (status) {
@@ -40,7 +57,7 @@ export const RecentApplications: React.FC = () => {
     <Card className="col-span-2">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Recent Applications</CardTitle>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" onClick={handleViewAllClick}>
           View All
         </Button>
       </CardHeader>
@@ -97,7 +114,12 @@ export const RecentApplications: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-1">
-                    <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-7 w-7"
+                      onClick={() => handleViewApplication(application.id)}
+                    >
                       <Eye className="h-3 w-3" />
                     </Button>
                     <Button variant="ghost" size="icon" className="h-7 w-7">

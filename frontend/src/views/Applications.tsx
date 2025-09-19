@@ -4,6 +4,7 @@ import { Plus, CheckCircle, XCircle, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ApplicationFilters } from '@/components/applications/ApplicationFilters'
 import { ApplicationsTable } from '@/components/applications/ApplicationsTable'
+import { BasicModal } from '@/components/applications/BasicModal'
 import { mockApplications } from '@/data/mockData'
 import { Application } from '@/types/application'
 
@@ -14,6 +15,8 @@ export const Applications: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedPriority, setSelectedPriority] = useState('all')
+  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const filteredApplications = useMemo(() => {
     return applications.filter(app => {
@@ -59,8 +62,16 @@ export const Applications: React.FC = () => {
   }
 
   const handleViewApplication = (application: Application) => {
-    // In a real app, this would open a modal or navigate to a detail page
-    console.log('Viewing application:', application.id)
+    console.log('Opening modal for application:', application.id)
+    console.log('Application data:', application)
+    setSelectedApplication(application)
+    setIsModalOpen(true)
+    console.log('Modal state set to open')
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedApplication(null)
   }
 
   const handleRefresh = () => {
@@ -165,6 +176,13 @@ export const Applications: React.FC = () => {
           />
         </motion.div>
       </div>
+
+      {/* Application Detail Modal */}
+      <BasicModal
+        application={selectedApplication}
+        open={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   )
 }

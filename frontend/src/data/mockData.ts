@@ -8,18 +8,52 @@ export const mockApplications: Application[] = [
     applicantName: 'Ahmed Hassan',
     applicantEmail: 'ahmed@example.com',
     applicantPhone: '+1234567890',
+    applicantAddress: '123 Medical District, Karachi, Pakistan',
+    applicantProfession: 'Construction Worker',
+    applicantOrganization: 'Local Construction Co.',
+    applicantPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
     category: 'Medical Assistance',
     title: 'Emergency Heart Surgery',
-    description: 'Urgent medical assistance needed for heart surgery operation.',
+    description: 'Urgent medical assistance needed for heart surgery operation. Patient is a 45-year-old construction worker who suffered a heart attack and requires immediate surgical intervention.',
     requestedAmount: 25000,
     documents: [
       {
-        id: '1',
+        id: '1a',
+        name: 'applicant-photo.jpg',
+        type: 'image/jpeg',
+        category: 'photo',
+        size: 145000,
+        url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+        thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+        uploadedAt: '2024-01-10T09:00:00Z'
+      },
+      {
+        id: '1b',
         name: 'medical-report.pdf',
         type: 'application/pdf',
+        category: 'medical',
         size: 1024000,
         url: '#',
         uploadedAt: '2024-01-10T10:00:00Z'
+      },
+      {
+        id: '1c',
+        name: 'identity-card.jpg',
+        type: 'image/jpeg',
+        category: 'identity',
+        size: 256000,
+        url: '#',
+        thumbnail: '#',
+        uploadedAt: '2024-01-10T09:30:00Z'
+      },
+      {
+        id: '1d',
+        name: 'hospital-estimate.pdf',
+        type: 'application/pdf',
+        category: 'medical',
+        size: 512000,
+        url: '#',
+        uploadedAt: '2024-01-10T11:00:00Z'
       }
     ],
     status: 'under_review',
@@ -33,18 +67,51 @@ export const mockApplications: Application[] = [
     applicantName: 'Fatima Ali',
     applicantEmail: 'fatima@example.com',
     applicantPhone: '+1234567891',
+    applicantAddress: '456 University Road, Lahore, Pakistan',
+    applicantProfession: 'Student',
+    applicantOrganization: 'Punjab University',
+    applicantPhoto: 'https://images.unsplash.com/photo-1494790108755-2616b612b120?w=150&h=150&fit=crop&crop=face',
     category: 'Education Support',
     title: 'University Tuition Assistance',
-    description: 'Financial support needed for university education in computer science.',
+    description: 'Financial support needed for university education in computer science. Student has excellent academic record but facing financial difficulties.',
     requestedAmount: 15000,
     documents: [
       {
-        id: '2',
+        id: '2a',
+        name: 'applicant-photo.jpg',
+        type: 'image/jpeg',
+        category: 'photo',
+        size: 128000,
+        url: 'https://images.unsplash.com/photo-1494790108755-2616b612b120?w=150&h=150&fit=crop&crop=face',
+        thumbnail: 'https://images.unsplash.com/photo-1494790108755-2616b612b120?w=80&h=80&fit=crop&crop=face',
+        uploadedAt: '2024-01-09T14:00:00Z'
+      },
+      {
+        id: '2b',
         name: 'acceptance-letter.pdf',
         type: 'application/pdf',
+        category: 'education',
         size: 512000,
         url: '#',
         uploadedAt: '2024-01-09T14:30:00Z'
+      },
+      {
+        id: '2c',
+        name: 'academic-transcript.pdf',
+        type: 'application/pdf',
+        category: 'education',
+        size: 768000,
+        url: '#',
+        uploadedAt: '2024-01-09T14:45:00Z'
+      },
+      {
+        id: '2d',
+        name: 'family-income-certificate.pdf',
+        type: 'application/pdf',
+        category: 'financial',
+        size: 345000,
+        url: '#',
+        uploadedAt: '2024-01-09T15:00:00Z'
       }
     ],
     status: 'approved',

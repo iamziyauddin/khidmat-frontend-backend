@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AuditLogsTable } from '@/components/audit/AuditLogsTable'
+import { AuditLogDetailModal } from '@/components/audit/AuditLogDetailModal'
 import { mockAuditLogs } from '@/data/mockData'
 import { AuditLog } from '@/types/audit'
 
@@ -14,6 +15,8 @@ export const AuditLogs: React.FC = () => {
   const [selectedAction, setSelectedAction] = useState('all')
   const [selectedResourceType, setSelectedResourceType] = useState('all')
   const [selectedUser, setSelectedUser] = useState('all')
+  const [selectedAuditLog, setSelectedAuditLog] = useState<AuditLog | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const filteredLogs = useMemo(() => {
     return auditLogs.filter(log => {
@@ -37,7 +40,46 @@ export const AuditLogs: React.FC = () => {
   const uniqueUsers = Array.from(new Set(auditLogs.map(log => ({ id: log.userId, name: log.userName }))))
 
   const handleViewDetails = (log: AuditLog) => {
-    console.log('Viewing audit log details:', log.id)
+    setSelectedAuditLog(log)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedAuditLog(null)
+  }
+
+  const handleDownloadLog = (log: AuditLog) => {
+    // Create a JSON file with the audit log data
+    const logData = {
+      id: log.id,
+      timestamp: log.timestamp,
+      user: {
+        id: log.userId,
+        name: log.userName
+      },
+      action: log.action,
+      resource: {
+        type: log.resourceType,
+        id: log.resourceId
+      },
+      details: log.details,
+      network: {
+        ipAddress: log.ipAddress,
+        userAgent: log.userAgent
+      }
+    }
+    
+    const dataStr = JSON.stringify(logData, null, 2)
+    const dataBlob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(dataBlob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `audit-log-${log.id}-${new Date(log.timestamp).toISOString().split('T')[0]}.json`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
   }
 
   const handleRefresh = () => {
@@ -157,8 +199,16 @@ export const AuditLogs: React.FC = () => {
         <AuditLogsTable
           auditLogs={filteredLogs}
           onViewDetails={handleViewDetails}
+          onDownloadLog={handleDownloadLog}
         />
       </motion.div>
+
+      {/* Audit Log Detail Modal */}
+      <AuditLogDetailModal
+        auditLog={selectedAuditLog}
+        open={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   )
 }

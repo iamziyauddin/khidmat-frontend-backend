@@ -3,6 +3,10 @@ export interface Application {
   applicantName: string
   applicantEmail: string
   applicantPhone: string
+  applicantAddress?: string
+  applicantProfession?: string
+  applicantOrganization?: string
+  applicantPhoto?: string // URL to applicant's photo
   category: string
   title: string
   description: string
@@ -21,10 +25,12 @@ export interface Application {
 export interface Document {
   id: string
   name: string
-  type: string
+  type: string // MIME type (e.g., 'image/jpeg', 'application/pdf', 'image/png')
+  category: 'photo' | 'identity' | 'medical' | 'financial' | 'education' | 'business' | 'other'
   size: number
   url: string
   uploadedAt: string
+  thumbnail?: string // URL to thumbnail for images
 }
 
 export interface StatusTransition {

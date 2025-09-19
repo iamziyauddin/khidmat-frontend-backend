@@ -14,6 +14,10 @@ import { ActivityTimeline } from '@/components/dashboard/ActivityTimeline'
 import { QuickActions } from '@/components/dashboard/QuickActions'
 import { RecentApplications } from '@/components/dashboard/RecentApplications'
 
+interface DashboardProps {
+  onNavigate?: (view: string) => void
+}
+
 const kpiData = [
   {
     title: 'Total Applications',
@@ -57,7 +61,7 @@ const kpiData = [
   }
 ]
 
-export const Dashboard: React.FC = () => {
+export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <motion.div
@@ -91,8 +95,8 @@ export const Dashboard: React.FC = () => {
 
       {/* Quick Actions and Recent Applications */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <QuickActions />
-        <RecentApplications />
+        <QuickActions onNavigate={onNavigate} />
+        <RecentApplications onNavigate={onNavigate} />
       </div>
     </div>
   )
